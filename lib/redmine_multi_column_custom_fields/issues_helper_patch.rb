@@ -35,19 +35,21 @@ module RedmineMultiColumnIssuesHelperPatch
         s = "<tr>\n"
         n = 0
         last_multi_column = false
+        hr = "<tr><td colspan='4'><hr /></td></tr>\n"
         ordered_values.compact.each do |value|
+          css = "cf_#{value.custom_field.id}"
           if value.custom_field.multi_column?
-            s << "</tr><tr>\n"
-            s << "<td colspan='4'><div class='wiki'>\n"
-            s << "<hr />\n"
-            s << "<p><strong>#{ h(value.custom_field.name) }</strong></p><br />\n"
-            s << "<p>#{ simple_format_without_paragraph(h(show_value(value))) }</p>\n"
-            s << "</div></td></tr>"
+            s << "</tr>\n" unless last_multi_column
+            s << hr
+            s << "<tr><td colspan='4' class=\"#{css}\">\n"
+            s << "<p><strong>#{ h(value.custom_field.name) }</strong></p>\n"
+            s << "<div class='wiki'>#{ h(show_value(value)) }</div>\n"
+            s << "</td></tr>"
             n = 0
           else
-            s << "<hr />\n" if last_multi_column
-            s << "</tr>\n<tr>\n" if n > 0 && n % 2  == 0
-            s << "\t<th>#{ h(value.custom_field.name) }:</th><td>#{ simple_format_without_paragraph(h(show_value(value))) }</td>\n"
+            s << hr if last_multi_column
+            s << "</tr>\n<tr>\n" if n > 0 && (n % 2) == 0
+            s << "\t<th class=\"#{css}\">#{ h(value.custom_field.name) }:</th><td class=\"#{css}\">#{ h(show_value(value)) }</td>\n"
             n += 1
           end
           last_multi_column = value.custom_field.multi_column?

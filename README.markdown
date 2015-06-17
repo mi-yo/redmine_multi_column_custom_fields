@@ -6,7 +6,7 @@ Redmine Multi-Column Custom Fields is a plugin that aids in
 formatting an issue containing custom fields by allowing a
 custom field to span the entire row of the fields table.
 
-Tested on Redmine 2.1, 2.2 and 2.3 (trunk as of 8/14/13).
+Tested on Redmine 2.5 and 2.6.
 
 Users of Redmine 2.0.x must use 2.0-stable branch.  Issue 
 editing display support is only present on the 2.1 (master)
